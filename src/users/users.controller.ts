@@ -1,30 +1,45 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { User } from "@prisma/client";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from "@nestjs/common";
+import { Prisma, User } from "@prisma/client";
 import { UsersService } from "@/users/users.service";
 
 @Controller("users")
 export class UsersController {
   constructor(private usersService: UsersService) {}
-  //
-  // @Get()
-  // findUsers() {}
-  //
-  // @Get("users/:id")
-  // findUser(@Param("id") id: string) {}
+
+  @Get()
+  findUsers() {
+    return this.usersService.findUsers();
+  }
+
+  @Get(":uuid")
+  findUser(@Param("uuid") uuid: string): Promise<User> {
+    return this.usersService.findUser({ uuid });
+  }
 
   @Post()
   async signupUser(@Body() user: User) {
-    try {
-      const response = await this.usersService.createUser(user);
-      console.log("ответ", response);
-    } catch (error) {
-      console.error("Ошибка", error, "конец");
-    }
+    return this.usersService.createUser(user);
   }
 
-  // @Patch("users/:id")
-  // updateUser(@Param("id") id: string, @Body() user: User) {}
-  //
-  // @Delete("users/:id")
-  // deleteUser(@Param("id") id: string) {}
+  @Patch(":uuid")
+  async updateUser(
+    @Param("uuid") uuid: string,
+    @Body() updateUserDto: Prisma.UserUpdateInput,
+  ) {
+    return this.usersService.updateUser(uuid, updateUserDto);
+  }
+
+  @Delete(":uuid")
+  async deleteUser(@Param("uuid") uuid: string) {
+    return this.usersService.deleteUser(uuid);
+  }
 }
