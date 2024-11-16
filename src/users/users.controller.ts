@@ -6,10 +6,11 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from "@nestjs/common";
 import { Prisma, User } from "@prisma/client";
 import { UsersService } from "@/users/users.service";
+import { ApiBody } from "@nestjs/swagger";
+import { CreateUserDto, FindUsersByParamsDto } from "@/users/users.dto";
 
 @Controller("users")
 export class UsersController {
@@ -22,12 +23,33 @@ export class UsersController {
 
   @Get(":uuid")
   findUser(@Param("uuid") uuid: string): Promise<User> {
-    return this.usersService.findUser({ uuid });
+    return this.usersService.findUserByUuid({ uuid });
   }
 
   @Post()
-  async signupUser(@Body() user: User) {
+  @ApiBody({ type: CreateUserDto })
+  async signupUser(@Body() user: CreateUserDto) {
     return this.usersService.createUser(user);
+  }
+
+  @Post("findUsersByParams")
+  @ApiBody({ type: FindUsersByParamsDto })
+  findUsersByParams(
+    @Body()
+    params: FindUsersByParamsDto = {
+      pagination: {
+        count: 10,
+        page: 1,
+      },
+    },
+  ) {
+    const { pagination } = params;
+    return this.usersService.findUserWithParams({
+      pagination: {
+        count: pagination.count ?? 10,
+        page: pagination.page ?? 1,
+      },
+    });
   }
 
   @Patch(":uuid")

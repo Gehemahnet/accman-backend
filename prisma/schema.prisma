@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  uuid String @default(uuid()) @id
-  userName String @unique
-  name String?
-  surname String?
-  lastName String?
-  email String @unique
+  uuid        String    @id @default(uuid())
+  userName    String    @unique
+  name        String?
+  surname     String?
+  lastName    String?
+  email       String    @unique
   dateOfBirth DateTime?
-  role Role @default(USER)
+  role        Role      @default(USER)
 }
 
 enum Role {
