@@ -7,6 +7,6 @@ export class ExchangeController {
 
   @Get("getTinkoffAccountInformation")
   getTinkoffAccountInformation() {
-    this.exchangeService.getTinkoffAccountInfo();
+    return this.exchangeService.getTinkoffAccountInfo();
   }
 }

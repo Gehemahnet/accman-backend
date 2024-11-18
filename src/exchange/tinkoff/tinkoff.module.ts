@@ -10,6 +10,7 @@ import { TinkoffService } from "@/exchange/tinkoff/tinkoff.service";
       },
     }),
   ],
+  providers: [TinkoffService],
   exports: [TinkoffService],
 })
 export class TinkoffModule {}

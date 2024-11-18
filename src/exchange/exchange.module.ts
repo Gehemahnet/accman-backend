@@ -1,11 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ExchangeService } from "@/exchange/exchange.service";
-import { TinkoffService } from "@/exchange/tinkoff/tinkoff.service";
 import { ExchangeController } from "@/exchange/exchange.controller";
-//Должно
+import { TinkoffModule } from "@/exchange/tinkoff/tinkoff.module";
 
 @Module({
-  imports: [TinkoffService],
+  imports: [TinkoffModule],
   controllers: [ExchangeController],
   providers: [ExchangeService],
 })
