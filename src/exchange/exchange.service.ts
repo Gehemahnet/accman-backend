@@ -1,15 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { TinkoffService } from "@/exchange/tinkoff/tinkoff.service";
+import type {
+  V1Account,
+  V1PortfolioResponse,
+} from "@/exchange/tinkoff/tinkoff-api";
+
+type Summary = (V1Account & { portfolio: V1PortfolioResponse })[];
 
 @Injectable()
 export class ExchangeService {
   constructor(private tinkoffService: TinkoffService) {}
 
   async getTinkoffAccountInfo() {
-    const { accounts }: { accounts: [] } =
-      await this.tinkoffService.getUserAccounts();
+    const { accounts } = await this.tinkoffService.getUserAccounts();
 
-    const summary = accounts.map((account: { id: string }) => {
+    const summary: Summary = accounts.map((account) => {
       return {
         ...account,
         portfolio: {},
