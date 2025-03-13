@@ -6,10 +6,22 @@ import { User, Prisma } from "@prisma/client";
 export class UsersService {
   constructor(private prismaService: PrismaService) {}
 
-  async findUser(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
+  async findUserByUuid(uuid: string) {
     try {
       return this.prismaService.user.findUnique({
-        where: userWhereUniqueInput,
+        where: { uuid },
+      });
+    } catch (error) {
+      console.error("error", error);
+    }
+  }
+
+  async findUserByLogin(login: string): Promise<User> {
+    try {
+      return this.prismaService.user.findFirst({
+        where: {
+          OR: [{ userName: login }, { email: login }],
+        },
       });
     } catch (error) {
       console.error("error", error);

@@ -21,8 +21,13 @@ export class UsersController {
   }
 
   @Get(":uuid")
-  findUser(@Param("uuid") uuid: string): Promise<User> {
-    return this.usersService.findUser({ uuid });
+  findUserByUuid(@Param("uuid") uuid: string): Promise<User> {
+    return this.usersService.findUserByUuid(uuid);
+  }
+
+  @Get()
+  findUserByLogin(@Query("login") login: string): Promise<User> {
+    return this.usersService.findUserByLogin(login);
   }
 
   @Post()
