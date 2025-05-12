@@ -1,6 +1,6 @@
 import { Strategy } from "passport-local";
 import { PassportStrategy } from "@nestjs/passport";
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthorizationService } from "@/authorization/authorization.service";
 import { User } from "@prisma/client";
 
@@ -10,12 +10,19 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: "identifier" });
   }
 
-  async validate(identifier: string, password: string): Promise<User | null> {
+  async validate(
+    identifier: string,
+    password: string,
+  ): Promise<Omit<User, "password">> {
     const user = await this.authorizationService.validateUser(
       identifier,
       password,
     );
 
-    return user && user.password === password ? user : null;
+    if (!user) {
+      throw new UnauthorizedException("Неверный логин или пароль");
+    }
+
+    return user;
   }
 }

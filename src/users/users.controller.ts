@@ -10,15 +10,16 @@ import {
 } from "@nestjs/common";
 import { Prisma, User } from "@prisma/client";
 import { UsersService } from "@/users/users.service";
+import { CreateUserDto } from "@/users/dto/create-user.dto";
 
 @Controller("users")
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get()
-  findUsers() {
-    return this.usersService.findUsers();
-  }
+  // @Get()
+  // findUsers() {
+  //   return this.usersService.findUsers();
+  // }
 
   @Get(":uuid")
   findUserByUuid(@Param("uuid") uuid: string): Promise<User> {
@@ -31,7 +32,7 @@ export class UsersController {
   }
 
   @Post()
-  async signupUser(@Body() user: User) {
+  async signupUser(@Body() user: CreateUserDto) {
     return this.usersService.createUser(user);
   }
 
