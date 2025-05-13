@@ -16,28 +16,28 @@ import { CreateUserDto } from "@/users/dto/create-user.dto";
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  // @Get()
-  // findUsers() {
-  //   return this.usersService.findUsers();
-  // }
+  @Get()
+  findUsers() {
+    return this.usersService.findUsers();
+  }
+
+  @Get("by-login")
+  findUserByLogin(@Query("login") login: string): Promise<User> {
+    return this.usersService.findUserByLogin(login);
+  }
 
   @Get(":uuid")
   findUserByUuid(@Param("uuid") uuid: string): Promise<User> {
     return this.usersService.findUserByUuid(uuid);
   }
 
-  @Get()
-  findUserByLogin(@Query("login") login: string): Promise<User> {
-    return this.usersService.findUserByLogin(login);
-  }
-
   @Post()
-  async signupUser(@Body() user: CreateUserDto) {
+  signupUser(@Body() user: CreateUserDto) {
     return this.usersService.createUser(user);
   }
 
   @Patch(":uuid")
-  async updateUser(
+  updateUser(
     @Param("uuid") uuid: string,
     @Body() updateUserDto: Prisma.UserUpdateInput,
   ) {
@@ -45,7 +45,7 @@ export class UsersController {
   }
 
   @Delete(":uuid")
-  async deleteUser(@Param("uuid") uuid: string) {
+  deleteUser(@Param("uuid") uuid: string) {
     return this.usersService.deleteUser(uuid);
   }
 }

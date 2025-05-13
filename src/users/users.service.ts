@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  ConflictException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { PrismaService } from "@/prisma/prisma.service";
 import { User, Prisma } from "@prisma/client";
 import * as bcrypt from "bcrypt";
@@ -17,16 +22,30 @@ export class UsersService {
     }
   }
 
-  async findUserByLogin(login: string): Promise<User> {
-    try {
-      return this.prismaService.user.findFirst({
-        where: {
-          OR: [{ userName: login }, { email: login }],
-        },
-      });
-    } catch (error) {
-      console.error("error", error);
+  async findUserByLogin(login: string): Promise<User | null> {
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        OR: [
+          {
+            userName: {
+              equals: login,
+              mode: "insensitive",
+            },
+          },
+          {
+            email: {
+              equals: login,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
     }
+    return user;
   }
 
   async findUsers() {
@@ -43,7 +62,7 @@ export class UsersService {
     });
 
     if (userExist) {
-      throw new HttpException("Duplicated", HttpStatus.CONFLICT);
+      throw new ConflictException("User already exists");
     }
 
     return this.prismaService.user.create({
