@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { HttpModule } from "@nestjs/axios";
-import { TinkoffService } from "@/exchange/tinkoff/tinkoff.service";
+import { TinkoffService } from "@modules/exchange/tinkoff/tinkoff.service";
 
 @Module({
   imports: [

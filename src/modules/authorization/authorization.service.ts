@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { UsersService } from "@/users/users.service";
+import { UsersService } from "@modules/users/users.service";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
-import { LoginDto } from "@/users/dto/create-user.dto";
+import { LoginDto } from "@dto/create-user.dto";
 
 @Injectable()
 export class AuthorizationService {

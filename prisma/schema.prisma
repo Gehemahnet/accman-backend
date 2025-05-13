@@ -17,9 +17,28 @@ model User {
   email String @unique
   dateOfBirth DateTime?
   role Role @default(USER)
+  tasks Task[]
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+model Task {
+  uuid String @default(uuid()) @id
+  userId String
+  user User @relation(fields: [userId], references: [uuid])
+  description  String?
+  date DateTime
+  name  String
+  type TaskType @default(DAY)
+}
+
+enum TaskType {
+  TIMED
+  DAY
+  WEEK
+  MONTH
+  YEAR
 }

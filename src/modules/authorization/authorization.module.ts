@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { AuthorizationService } from "./authorization.service";
 import { AuthorizationController } from "./authorization.controller";
-import { UsersModule } from "@/users/users.module";
+import { UsersModule } from "@modules/users/users.module";
 import { PassportModule } from "@nestjs/passport";
-import { LocalStrategy } from "@/authorization/strategies/local.strategy";
-import { JwtStrategy } from "@/authorization/strategies/jwt.strategy";
+import { LocalStrategy } from "@strategies/local.strategy";
+import { JwtStrategy } from "@strategies/jwt.strategy";
 import { JwtModule } from "@nestjs/jwt";
 import * as process from "node:process";
 

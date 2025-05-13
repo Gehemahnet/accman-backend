@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { TinkoffService } from "@/exchange/tinkoff/tinkoff.service";
+import { TinkoffService } from "@modules/exchange/tinkoff/tinkoff.service";
 import type {
   V1Account,
   V1PortfolioResponse,
-} from "@/exchange/tinkoff/tinkoff-api";
+} from "@modules/exchange/tinkoff/tinkoff-api";
 
 type Summary = (V1Account & { portfolio: V1PortfolioResponse })[];
 

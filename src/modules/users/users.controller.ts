@@ -9,8 +9,8 @@ import {
   Query,
 } from "@nestjs/common";
 import { Prisma, User } from "@prisma/client";
-import { UsersService } from "@/users/users.service";
-import { CreateUserDto } from "@/users/dto/create-user.dto";
+import { UsersService } from "@modules/users/users.service";
+import { CreateUserDto } from "@dto/create-user.dto";
 
 @Controller("users")
 export class UsersController {

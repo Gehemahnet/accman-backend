@@ -1,5 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
-import { ExchangeService } from "@/exchange/exchange.service";
+import { ExchangeService } from "@modules/exchange/exchange.service";
 
 @Controller("exchange")
 export class ExchangeController {

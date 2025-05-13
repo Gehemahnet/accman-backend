@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { PrismaService } from "@/prisma/prisma.service";
+import { PrismaService } from "@modules/prisma/prisma.service";
 import { User, Prisma } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 
@@ -27,16 +27,10 @@ export class UsersService {
       where: {
         OR: [
           {
-            userName: {
-              equals: login,
-              mode: "insensitive",
-            },
+            userName: login.toLowerCase(),
           },
           {
-            email: {
-              equals: login,
-              mode: "insensitive",
-            },
+            email: login.toLowerCase(),
           },
         ],
       },
@@ -68,6 +62,8 @@ export class UsersService {
     return this.prismaService.user.create({
       data: {
         ...data,
+        userName: data.userName.toLowerCase(),
+        email: data.email.toLowerCase(),
         password: await bcrypt.hash(data.password, 10),
       },
     });

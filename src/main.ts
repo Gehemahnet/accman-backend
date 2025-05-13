@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
+import { AppModule } from "@modules/app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import * as process from "node:process";
 
@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle("Median")
     .setDescription("The api description")
     .setTitle(process.env.npm_package_version)
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
