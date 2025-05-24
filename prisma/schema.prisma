@@ -11,6 +11,9 @@ model User {
   uuid String @default(uuid()) @id
   userName String @unique
   password String
+  passwordResetToken String?
+  passwordResetExpires DateTime?
+  passwordChangedAt DateTime?
   name String?
   surname String?
   lastName String?

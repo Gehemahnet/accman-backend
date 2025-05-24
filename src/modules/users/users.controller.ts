@@ -8,9 +8,9 @@ import {
   Post,
   Query,
 } from "@nestjs/common";
-import { Prisma, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { UsersService } from "@modules/users/users.service";
-import { CreateUserDto } from "@dto/create-user.dto";
+import { CreateUserDto, UpdateUserDto } from "@dto/user.dto";
 
 @Controller("users")
 export class UsersController {
@@ -39,7 +39,7 @@ export class UsersController {
   @Patch(":uuid")
   updateUser(
     @Param("uuid") uuid: string,
-    @Body() updateUserDto: Prisma.UserUpdateInput,
+    @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.updateUser(uuid, updateUserDto);
   }

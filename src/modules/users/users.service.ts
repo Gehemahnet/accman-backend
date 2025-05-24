@@ -1,12 +1,12 @@
 import {
   ConflictException,
-  HttpStatus,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
 import { PrismaService } from "@modules/prisma/prisma.service";
-import { User, Prisma } from "@prisma/client";
+import { User } from "@prisma/client";
 import * as bcrypt from "bcrypt";
+import { CreateUserDto, UpdateUserDto } from "@dto/user.dto";
 
 @Injectable()
 export class UsersService {
@@ -50,7 +50,7 @@ export class UsersService {
     }
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createUser(data: CreateUserDto): Promise<User> {
     const userExist = await this.prismaService.user.findUnique({
       where: { email: data.email, userName: data.userName },
     });
@@ -69,10 +69,7 @@ export class UsersService {
     });
   }
 
-  async updateUser(
-    uuid: string,
-    updateUserDto: Prisma.UserUpdateInput,
-  ): Promise<User> {
+  async updateUser(uuid: string, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       return this.prismaService.user.update({
         where: { uuid },

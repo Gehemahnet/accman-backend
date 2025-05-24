@@ -16,7 +16,10 @@ export class CreateUserDto {
   lastName?: string;
 }
 
-export class LoginDto {
-  indetifier: string;
-  password: string;
+export class UpdateUserDto {
+  name?: string;
+
+  surname?: string;
+
+  lastName?: string;
 }
