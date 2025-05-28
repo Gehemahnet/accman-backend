@@ -1,5 +1,5 @@
-import { IsString, Matches, MinLength, NotContains } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { IsStrongPassword } from "@decorators/password-validation.decorator";
 
 export class LoginDto {
   @ApiProperty({
@@ -20,24 +20,13 @@ export class ChangePasswordDto {
     example: "Password123",
     description: "New password",
   })
-  @IsString()
-  @MinLength(6, { message: "Password must be at least 6 characters" })
-  @Matches(/(?=.*\d)/, {
-    message: "Пароль должен содержать хотя бы одну цифру",
-  })
-  @Matches(/(?=.*[a-z])/, {
-    message: "Пароль должен содержать хотя бы одну строчную букву",
-  })
-  @Matches(/(?=.*[A-Z])/, {
-    message: "Пароль должен содержать хотя бы одну заглавную букву",
-  })
-  @NotContains(" ", { message: "Пароль не должен содержать пробелы" })
+  @IsStrongPassword()
   newPassword: string;
 
   @ApiProperty({
     example: "OldPassword123",
     description: "Current password",
   })
-  @IsString()
+  @IsStrongPassword()
   currentPassword: string;
 }

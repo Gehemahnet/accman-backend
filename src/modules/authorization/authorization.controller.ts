@@ -17,6 +17,10 @@ import {
   ApiOperation,
   ApiResponse,
 } from "@nestjs/swagger";
+import {
+  RequestReset,
+  ResetPassword,
+} from "@/common/docs/swagger/authorization";
 
 @Controller("auth")
 export class AuthorizationController {
@@ -35,55 +39,15 @@ export class AuthorizationController {
   changePassword(@UserId() userId: string, @Body() data: ChangePasswordDto) {
     return this.authorizationService.changePassword(userId, data);
   }
-
+  @RequestReset()
   @Post("request-reset")
-  @ApiOperation({ summary: "Отправить ссылку для сброса пароля" })
-  @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        email: { type: "string", example: "user@example.com" },
-      },
-      required: ["email"],
-    },
-  })
-  @ApiResponse({
-    status: 200,
-    description: "Письмо отправлено (если email существует)",
-  })
   async requestReset(@Body("login") login: string) {
     await this.authorizationService.sendResetPasswordLink(login);
     return { message: "If login exists, email sent" };
   }
 
+  @ResetPassword()
   @Post("reset-password")
-  @ApiOperation({ summary: "Сбросить пароль по токену" })
-  @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        userId: {
-          type: "string",
-          example: "550e8400-e29b-41d4-a716-446655440000",
-        },
-        token: {
-          type: "string",
-          example: "a1b2c3d4...",
-        },
-        newPassword: {
-          type: "string",
-          example: "NewSecurePassword123!",
-          minLength: 8,
-        },
-      },
-      required: ["userId", "token", "newPassword"],
-    },
-  })
-  @ApiResponse({ status: 200, description: "Пароль успешно изменён" })
-  @ApiResponse({
-    status: 400,
-    description: "Неверный токен/пароль или токен просрочен",
-  })
   async resetPassword(
     @Body("userId") userId: string,
     @Body("token") token: string,

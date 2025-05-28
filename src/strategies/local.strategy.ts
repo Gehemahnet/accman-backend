@@ -1,6 +1,10 @@
 import { Strategy } from "passport-local";
 import { PassportStrategy } from "@nestjs/passport";
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { AuthorizationService } from "@modules/authorization/authorization.service";
 import { User } from "@prisma/client";
 
@@ -20,7 +24,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     );
 
     if (!user) {
-      throw new UnauthorizedException("Неверный логин или пароль");
+      console.log("NO USER");
+      throw new BadRequestException("Неверный логин или пароль");
     }
 
     return user;
