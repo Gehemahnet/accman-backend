@@ -9,6 +9,7 @@ import * as crypto from "crypto";
 import { JwtService } from "@nestjs/jwt";
 import { ChangePasswordDto, LoginDto } from "@dto";
 import { PrismaService } from "@modules/prisma/prisma.service";
+import { User } from "@prisma/client";
 
 @Injectable()
 export class AuthorizationService {
@@ -23,7 +24,13 @@ export class AuthorizationService {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch && user) {
-      const { password, ...result } = user;
+      const {
+        password,
+        passwordResetExpires,
+        passwordChangedAt,
+        passwordResetToken,
+        ...result
+      } = user;
       return result;
     }
 
@@ -122,7 +129,7 @@ export class AuthorizationService {
     //   .catch((err) => console.error(err));
   }
 
-  async login(data: LoginDto) {
+  async login(data: User) {
     return {
       access_token: this.jwtService.sign(data),
     };

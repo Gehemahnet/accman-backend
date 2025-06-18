@@ -1,12 +1,8 @@
 import { Strategy } from "passport-local";
 import { PassportStrategy } from "@nestjs/passport";
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { AuthorizationService } from "@modules/authorization/authorization.service";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -17,7 +13,15 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(
     identifier: string,
     password: string,
-  ): Promise<Omit<User, "password">> {
+  ): Promise<
+    Omit<
+      User,
+      | "password"
+      | "passwordResetToken"
+      | "passwordResetExpires"
+      | "passwordChangedAt"
+    >
+  > {
     const user = await this.authorizationService.validateUser(
       identifier,
       password,

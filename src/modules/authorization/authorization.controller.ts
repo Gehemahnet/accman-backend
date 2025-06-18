@@ -5,18 +5,14 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
+  Request,
 } from "@nestjs/common";
 import { AuthorizationService } from "@modules/authorization/authorization.service";
 import { AuthGuard } from "@nestjs/passport";
-import { LoginDto, ChangePasswordDto } from "@dto";
+import { ChangePasswordDto } from "@dto";
 import { UserId } from "@decorators";
 import { JwtAuthGuard } from "@guards";
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOperation,
-  ApiResponse,
-} from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 import {
   RequestReset,
   ResetPassword,
@@ -28,8 +24,8 @@ export class AuthorizationController {
 
   @UseGuards(AuthGuard("local"))
   @Post("login")
-  async login(@Body() data: LoginDto) {
-    return this.authorizationService.login(data);
+  async login(@Request() req) {
+    return this.authorizationService.login(req.user);
   }
 
   @ApiBearerAuth()
