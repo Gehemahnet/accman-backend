@@ -14,6 +14,7 @@ import { UserId } from "@decorators";
 import { JwtAuthGuard } from "@guards";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import {
+  Login,
   RequestReset,
   ResetPassword,
 } from "@/common/docs/swagger/authorization";
@@ -22,6 +23,7 @@ import {
 export class AuthorizationController {
   constructor(private authorizationService: AuthorizationService) {}
 
+  @Login()
   @UseGuards(AuthGuard("local"))
   @Post("login")
   async login(@Request() req) {

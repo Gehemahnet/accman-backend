@@ -15,6 +15,14 @@ export class LoginDto {
   password: string;
 }
 
+export class LoginResponseDto {
+  @ApiProperty({
+    example: "ey41mklzjfkl4m1.,nm.zee",
+    description: "Токен авторизации",
+  })
+  access_token: string;
+}
+
 export class ChangePasswordDto {
   @ApiProperty({
     example: "Password123",

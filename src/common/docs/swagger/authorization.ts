@@ -1,7 +1,41 @@
-import { ApiBody, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { applyDecorators } from "@nestjs/common";
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiResponse,
+} from "@nestjs/swagger";
+import { applyDecorators, HttpStatus } from "@nestjs/common";
+import { LoginResponseDto } from "@dto";
 
-export const Login = () => applyDecorators();
+export const Login = () =>
+  applyDecorators(
+    ApiOperation({ summary: "Авторизоваться в системе" }),
+    ApiBody({
+      schema: {
+        type: "object",
+        properties: {
+          identifier: { type: "string", example: "username" },
+          password: { type: "string", example: "password" },
+        },
+        required: ["identifier", "password"],
+      },
+    }),
+    ApiCreatedResponse({
+      description: "Успешно",
+      type: LoginResponseDto,
+      content: {
+        "application/json": {
+          examples: {
+            successResponse: {
+              value: {
+                access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+              },
+            },
+          },
+        },
+      },
+    }),
+  );
 
 export const ChangePassword = () => applyDecorators();
 
@@ -18,7 +52,7 @@ export const RequestReset = () =>
       },
     }),
     ApiResponse({
-      status: 200,
+      status: HttpStatus.OK,
       description: "Письмо отправлено (если email существует)",
     }),
   );
@@ -47,9 +81,12 @@ export const ResetPassword = () =>
         required: ["userId", "token", "newPassword"],
       },
     }),
-    ApiResponse({ status: 200, description: "Пароль успешно изменён" }),
     ApiResponse({
-      status: 400,
+      status: HttpStatus.OK,
+      description: "Пароль успешно изменён",
+    }),
+    ApiResponse({
+      status: HttpStatus.BAD_REQUEST,
       description: "Неверный токен/пароль или токен просрочен",
     }),
   );
