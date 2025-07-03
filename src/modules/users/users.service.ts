@@ -27,7 +27,7 @@ export class UsersService {
       where: {
         OR: [
           {
-            userName: login.toLowerCase(),
+            username: login.toLowerCase(),
           },
           {
             email: login.toLowerCase(),
@@ -52,7 +52,7 @@ export class UsersService {
 
   async createUser(data: CreateUserDto): Promise<User> {
     const userExist = await this.prismaService.user.findUnique({
-      where: { email: data.email, userName: data.userName },
+      where: { email: data.email, username: data.username },
     });
 
     if (userExist) {
@@ -62,7 +62,7 @@ export class UsersService {
     return this.prismaService.user.create({
       data: {
         ...data,
-        userName: data.userName.toLowerCase(),
+        username: data.username.toLowerCase(),
         email: data.email.toLowerCase(),
         password: await bcrypt.hash(data.password, 10),
       },

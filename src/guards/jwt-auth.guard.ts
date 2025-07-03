@@ -29,7 +29,7 @@ export class JwtAuthGuard implements CanActivate {
       });
 
       request.user = {
-        userId: payload.sub,
+        userId: payload.uuid,
         username: payload.username,
       };
 

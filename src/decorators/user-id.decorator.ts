@@ -12,6 +12,6 @@ export const UserId = createParamDecorator(
       throw new UnauthorizedException("No token provided");
     }
 
-    return request.user.uuid;
+    return request.user.userId;
   },
 );

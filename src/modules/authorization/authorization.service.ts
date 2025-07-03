@@ -24,11 +24,11 @@ export class AuthorizationService {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch && user) {
-      const { uuid, userName, email } = user;
+      const { uuid, username, email } = user;
 
       return {
         uuid,
-        userName,
+        username,
         email,
       };
     }

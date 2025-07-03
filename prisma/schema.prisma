@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   uuid String @default(uuid()) @id
-  userName String @unique
+  username String @unique
   password String
   passwordResetToken String?
   passwordResetExpires DateTime?
