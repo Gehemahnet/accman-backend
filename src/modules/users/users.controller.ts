@@ -10,7 +10,7 @@ import {
 } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { UsersService } from "@modules/users/users.service";
-import { CreateUserDto, UpdateUserDto } from "@dto/user.dto";
+import { CreateUserDto, UpdateUserDto } from "@modules/users/users.dto";
 
 @Controller("users")
 export class UsersController {

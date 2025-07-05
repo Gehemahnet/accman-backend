@@ -22,3 +22,17 @@ export class CreateTaskDto {
   @IsDateString()
   date: string;
 }
+
+export class PatchTaskDto {
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @IsDateString()
+  @IsOptional()
+  date?: string;
+}

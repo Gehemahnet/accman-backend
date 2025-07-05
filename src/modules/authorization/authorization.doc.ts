@@ -5,7 +5,7 @@ import {
   ApiResponse,
 } from "@nestjs/swagger";
 import { applyDecorators, HttpStatus } from "@nestjs/common";
-import { LoginResponseDto } from "@dto";
+import { LoginResponseDto } from "./authorization.dto";
 
 export const Login = () =>
   applyDecorators(

@@ -7,7 +7,7 @@ import { UsersService } from "@modules/users/users.service";
 import * as bcrypt from "bcrypt";
 import * as crypto from "crypto";
 import { JwtService } from "@nestjs/jwt";
-import { ChangePasswordDto, LoginDto } from "@dto";
+import { ChangePasswordDto } from "./authorization.dto";
 import { PrismaService } from "@modules/prisma/prisma.service";
 import { User } from "@prisma/client";
 

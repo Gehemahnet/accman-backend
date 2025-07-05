@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { AuthorizationService } from "@modules/authorization/authorization.service";
 import { AuthGuard } from "@nestjs/passport";
-import { ChangePasswordDto } from "@dto";
+import { ChangePasswordDto } from "./authorization.dto";
 import { UserId } from "@decorators";
 import { JwtAuthGuard } from "@guards";
 import { ApiBearerAuth } from "@nestjs/swagger";
@@ -17,7 +17,7 @@ import {
   Login,
   RequestReset,
   ResetPassword,
-} from "@/common/docs/swagger/authorization";
+} from "@modules/authorization/authorization.doc";
 
 @Controller("auth")
 export class AuthorizationController {

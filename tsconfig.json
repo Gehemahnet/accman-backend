@@ -4,8 +4,6 @@
     "paths": {
       "@decorators/*": ["decorators/*"],
       "@decorators": ["decorators/"],
-      "@dto/*": ["dto/*"],
-      "@dto": ["dto/"],
       "@guards/*": ["guards/*"],
       "@guards": ["guards/"],
       "@modules/*": ["modules/*"],

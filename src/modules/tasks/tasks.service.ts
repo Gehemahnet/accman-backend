@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "@modules/prisma/prisma.service";
-import { CreateTaskDto } from "@dto/task.dto";
+import { CreateTaskDto, PatchTaskDto } from "./tasks.dto";
 
 @Injectable()
 export class TasksService {
@@ -17,5 +17,26 @@ export class TasksService {
 
   async getUserTasks(userId: string) {
     return this.prisma.task.findMany({ where: { userId } });
+  }
+
+  async getTaskByUuid(uuid: string) {
+    return this.prisma.task.findUnique({
+      where: { uuid },
+    });
+  }
+
+  async patchTask(uuid: string, body: PatchTaskDto) {
+    const task = await this.prisma.task.findUnique({
+      where: { uuid },
+    });
+
+    if (!task) {
+      throw new NotFoundException("Task not found");
+    }
+
+    this.prisma.task.update({
+      where: { uuid },
+      data: { ...body },
+    });
   }
 }
