@@ -16,7 +16,11 @@ export class TasksService {
   }
 
   async getUserTasks(userId: string) {
-    return this.prisma.task.findMany({ where: { userId } });
+    const items = await this.prisma.task.findMany({ where: { userId } });
+
+    return {
+      items,
+    };
   }
 
   async getTaskByUuid(uuid: string) {

@@ -12,7 +12,7 @@ import { CreateTaskDto, PatchTaskDto } from "./tasks.dto";
 import { UserId } from "@decorators";
 import { JwtAuthGuard } from "@guards";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { PatchTask } from "./tasks.doc";
+import { GetTasks, GetTask, PatchTask, CreateTask } from "./tasks.doc";
 
 @ApiBearerAuth()
 @Controller("tasks")
@@ -20,16 +20,19 @@ import { PatchTask } from "./tasks.doc";
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
+  @CreateTask()
   @Post()
   createTask(@UserId() userId: string, @Body() data: CreateTaskDto) {
     return this.tasksService.createTask(userId, data);
   }
 
+  @GetTasks()
   @Get()
   getTasks(@UserId() userId: string) {
     return this.tasksService.getUserTasks(userId);
   }
 
+  @GetTask()
   @Get(":uuid")
   getTask(@Param("uuid") uuid: string) {
     return this.tasksService.getTaskByUuid(uuid);
