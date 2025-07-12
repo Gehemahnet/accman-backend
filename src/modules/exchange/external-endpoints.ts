@@ -1,3 +1,0 @@
-//region Tinkoff Investments
-
-//endregion

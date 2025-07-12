@@ -2,7 +2,6 @@ import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { UsersModule } from "@modules/users/users.module";
 import { PrismaModule } from "@modules/prisma/prisma.module";
-import { ExchangeModule } from "@modules/exchange/exchange.module";
 import { AuthorizationModule } from "@modules/authorization/authorization.module";
 import { LoggingMiddleware } from "@middlewares/logging.middleware";
 import { TasksModule } from "@modules/tasks/tasks.module";
@@ -14,7 +13,6 @@ import { TasksModule } from "@modules/tasks/tasks.module";
     }),
     PrismaModule,
     UsersModule,
-    ExchangeModule,
     AuthorizationModule,
     TasksModule,
   ],

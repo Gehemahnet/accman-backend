@@ -1,14 +1,13 @@
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationArguments,
   registerDecorator,
   ValidationOptions,
 } from "class-validator";
 
 @ValidatorConstraint({ name: "PasswordRequirements", async: false })
 export class PasswordValidator implements ValidatorConstraintInterface {
-  validate(password: string, args: ValidationArguments) {
+  validate(password: string) {
     // Минимум 8 символов
     if (password.length < 8) {
       return false;
@@ -45,7 +44,7 @@ export class PasswordValidator implements ValidatorConstraintInterface {
 
 export const IsStrongPassword =
   (validationOptions?: ValidationOptions) =>
-  (object: Object, propertyName: string) =>
+  (object: object, propertyName: string) =>
     registerDecorator({
       target: object.constructor,
       propertyName,

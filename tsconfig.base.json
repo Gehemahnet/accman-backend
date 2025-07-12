@@ -2,14 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@decorators/*": ["decorators/*"],
-      "@decorators": ["decorators/"],
-      "@guards/*": ["guards/*"],
-      "@guards": ["guards/"],
-      "@modules/*": ["modules/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@strategies/*": ["strategies/*"],
-      "@/*": ["./*"]
+      "@core/*": ["apps/core/src/*"],
+      "@finance/*": ["apps/finance/src/*"],
+      "libs/*": ["libs/*/src"]
     },
     "module": "commonjs",
     "declaration": true,
