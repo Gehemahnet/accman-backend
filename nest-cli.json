@@ -1,18 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "projects": {
-    "core": {
-      "sourceRoot": "apps/core/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/core/tsconfig.app.json"
-      }
-    },
-    "finance": {
-      "sourceRoot": "apps/finance/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/finance/tsconfig.app.json"
-      }
-    }
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "builder": "swc",
+    "typeCheck": true
   }
 }

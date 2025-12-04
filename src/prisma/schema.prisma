@@ -1,0 +1,48 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "generated"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  name                 String?
+  surname              String?
+  lastName             String?
+  email                String    @unique
+  dateOfBirth          DateTime?
+  role                 Role      @default(USER)
+  password             String
+  uuid                 String    @id @default(uuid())
+  passwordChangedAt    DateTime?
+  passwordResetExpires DateTime?
+  passwordResetToken   String?
+  username             String    @unique
+  tasks                Task[]
+}
+
+model Task {
+  uuid        String   @id @default(uuid())
+  userId      String
+  description String?
+  date        DateTime
+  name        String
+  type        TaskType @default(DAY)
+  user        User     @relation(fields: [userId], references: [uuid])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TaskType {
+  TIMED
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
